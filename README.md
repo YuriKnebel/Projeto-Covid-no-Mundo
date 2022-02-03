@@ -10,7 +10,7 @@ Os atributos utilizados foram:<br/>
 ![alt text](https://github.com/YuriKnebel/Projeto-Covid/blob/main/SQL/tabela-atributos.jpg)<br/>
 As queries tiveram como objetivo a transformação e a segmentação dos dados. Para isso, foi feito uso de agregações, subqueries, join, conversão de tipos de dados e CTE (Commom Table Expression).
 
-## Power BI
+## Dashboard no Power BI
 
 ![alt text](https://github.com/YuriKnebel/Projeto-Covid/blob/main/Power-BI/imagem-dashboard.png)
 
