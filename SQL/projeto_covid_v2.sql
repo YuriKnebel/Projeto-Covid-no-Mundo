@@ -1,8 +1,8 @@
--- UtilizaÁ„o do banco de dados covid
+-- Utiliza√ß√£o do banco de dados covid
 
 USE covid;
 
--- Vis„o geral dos dados
+-- Vis√£o geral dos dados
 
 SELECT 
 	*
@@ -14,7 +14,7 @@ SELECT
 FROM 
 	covid_mortes;
 
--- 100 primeiros dados, ordenados por paÌs e continente
+-- 100 primeiros dados, ordenados por pa√≠s e continente
 
 SELECT 
 	*
@@ -30,7 +30,7 @@ FROM
 WHERE 
 	ROW_NUMBER <= 100;
 
--- SeleÁ„o dos dados mais relevantes de mortes ordenados por paÌs e data
+-- Sele√ß√£o dos dados mais relevantes de mortes ordenados por pa√≠s e data
 
 SELECT 
 	location, date, total_cases, new_cases, total_deaths, population
@@ -39,7 +39,7 @@ FROM
 ORDER BY 
 	1, 2;
 
--- Verificando os paÌses com a maior quantidade de mortes
+-- Verificando os pa√≠ses com a maior quantidade de mortes
 
 SELECT 
 	location, MAX(total_deaths) AS max_total_death
@@ -50,9 +50,9 @@ GROUP BY
 ORDER BY 
 	max_total_death DESC;
 
--- Na an·lise acima temos problemas pois era para aparecer apenas paÌses
--- e est· aparecendo dados do mundo e de continentes
--- A correÁ„o est· abaixo
+-- Na an√°lise acima temos problemas pois era para aparecer apenas pa√≠ses
+-- e est√° aparecendo dados do mundo e de continentes
+-- A corre√ß√£o est√° abaixo
 
 SELECT 
 	location, MAX(total_deaths) AS max_total_death
@@ -90,7 +90,7 @@ WHERE
 ORDER BY 
 	1,2;
 
--- casos vs populaÁ„o ao longo do tempo
+-- casos vs popula√ß√£o ao longo do tempo
 
 SELECT 
 	location, date, total_cases, population, (CAST(total_cases AS float)/population*100) AS cases_percentual
@@ -102,7 +102,7 @@ WHERE
 ORDER BY 
 	1,2;
 
--- Localizando os paÌses com a maior taxa de infecÁ„o
+-- Localizando os pa√≠ses com a maior taxa de infec√ß√£o
 
 SELECT 
 	location, population, MAX(total_cases) AS highest_infection_count, MAX((CAST(total_cases AS float)/population))*100 AS infected_percentual
@@ -115,7 +115,7 @@ GROUP BY
 ORDER BY 
 	4 DESC;
 
--- Localizando os paÌses com a maior taxa de morte
+-- Localizando os pa√≠ses com a maior taxa de morte
 
 SELECT 
 	location, SUM(CAST(total_cases AS bigint)) AS total_cases, SUM(CAST(total_deaths AS bigint)) AS total_deaths, (SUM(CAST(total_deaths AS float))/SUM(CAST(total_cases AS bigint))*100) AS death_percentage
@@ -128,7 +128,7 @@ GROUP BY
 ORDER BY 
 	death_percentage DESC;
 
--- N˙meros globais de casos e mortes
+-- N√∫meros globais de casos e mortes
 
 SELECT 
 	SUM(new_cases) AS cases, SUM(new_deaths) AS deaths, SUM(CAST(new_deaths AS float))/SUM(new_cases)*100 AS death_percentage --total_deaths, (CAST(total_deaths AS bigint)/CAST(total_cases AS float)*100) AS death_percentage
@@ -139,7 +139,7 @@ WHERE
 ORDER BY 
 	1,2;
 
--- Quantidade de vacinaÁıes vs populaÁ„o
+-- Quantidade de vacina√ß√µes vs popula√ß√£o
 
 SELECT
 	cm.continent, cm.location, cm.date, cm.population, cv.new_vaccinations, 
@@ -155,7 +155,7 @@ WHERE
 ORDER BY 
 	location, date;
 
--- UtilizaÁ„o de CTE para calcular o percentual de vacinaÁ„o em relaÁ„o ‡ populaÁ„o
+-- Utiliza√ß√£o de CTE para calcular o percentual de vacina√ß√£o em rela√ß√£o √† popula√ß√£o
 
 WITH 
 	popvsvac (continent, location, date, population, new_vaccinations, acumulado_vacinacao) AS (
@@ -177,9 +177,9 @@ SELECT
 FROM 
 	popvsvac
 
--- O cÛdigo acima tem como problema o fato das pessoas tomarem mais de uma dose da vacina,
+-- O c√≥digo acima tem como problema o fato das pessoas tomarem mais de uma dose da vacina,
 -- por tal motivo o percentual acaba ultrapassando 100%
--- Abaixo foi utilizada a coluna people_fully_vaccinated em comparaÁ„o com a populaÁ„o
+-- Abaixo foi utilizada a coluna people_fully_vaccinated em compara√ß√£o com a popula√ß√£o
 
 SELECT
 	cm.continent, cm.location, cm.date, cm.population, cv.people_fully_vaccinated, (CAST(cv.people_fully_vaccinated AS float)/cm.population)*100 AS percentage_fully_vaccinated
@@ -196,17 +196,7 @@ ORDER BY
 
 -- Criando Views para utilizar no PowerBI
 
-/* (((RETIRADO NO FINAL DO PROJETO)))
-CREATE VIEW numeros_globais
-AS
-SELECT 
-	SUM(new_cases) AS cases, SUM(new_deaths) AS deaths, SUM(CAST(new_deaths AS float))/SUM(new_cases)*100 AS death_percentage --total_deaths, (CAST(total_deaths AS bigint)/CAST(total_cases AS float)*100) AS death_percentage
-FROM 
-	covid_mortes
-WHERE 
-	continent IS NOT NULL;*/
-
---
+-- View numeros_globais
 
 CREATE VIEW numeros_globais
 AS
@@ -218,29 +208,7 @@ WHERE
 	continent IS NOT NULL
 GROUP BY date;
 
-/*(((RETIRADO NO FINAL DO PROJETO)))
-CREATE VIEW total_mortes_paises
-AS
-SELECT 
-	location, MAX(total_deaths) AS max_total_death
-FROM 
-	covid_mortes
-WHERE 
-	continent IS NOT NULL
-GROUP BY 
-	location;*/
-
-/*(((RETIRADO NO FINAL DO PROJETO)))
-CREATE VIEW total_mortes_continentes
-AS
-SELECT 
-	continent, SUM(max_total_deaths) AS continent_total_death
-FROM 
-	(SELECT location, continent, MAX(total_deaths) AS max_total_deaths FROM covid_mortes GROUP BY continent, location) covid_death
-WHERE 
-	continent IS NOT NULL
-GROUP BY 
-	continent;*/
+-- View casos_mortes_tempo
 
 CREATE VIEW casos_mortes_tempo
 AS
@@ -251,6 +219,8 @@ FROM
 WHERE 
 	continent IS NOT NULL;
 
+-- View casos_populacao_tempo
+
 CREATE VIEW casos_populacao_tempo
 AS
 SELECT 
@@ -260,17 +230,7 @@ FROM
 WHERE 
 	continent IS NOT NULL;
 
-/*(((RETIRADO NO FINAL DO PROJETO)))
-CREATE VIEW taxa_infeccao_paises
-AS
-SELECT 
-	location, population, MAX(total_cases) AS highest_infection_count, MAX((CAST(total_cases AS float)/population))*100 AS infected_percentual
-FROM 
-	covid_mortes
-WHERE 
-	continent IS NOT NULL
-GROUP BY 
-	location, population;*/
+-- View vacinacao_completa_populacao
 
 CREATE VIEW vacinacao_completa_populacao
 AS
