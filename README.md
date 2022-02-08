@@ -14,6 +14,6 @@ As queries tiveram como objetivo a transformação e a segmentação dos dados. 
 
 ![alt text](https://github.com/YuriKnebel/Projeto-Covid/blob/main/Power-BI/imagem-dashboard.png)
 
-O dashboard criado visa oferecer de forma interativa a análise dos dados de casos, mortes e vacinações completas por país. Além disso, foram inseridos dados globais para que possamos comparar a situação do país em um contexto mais amplo.
+O dashboard criado visa oferecer de forma interativa a análise dos dados de casos, mortes e vacinações completas por país e por data. Além disso, foram inseridos dados globais para que possamos comparar a situação dos países em um contexto mais amplo.
 
 Para fazer download do arquivo contendo o dashboard [clique aqui](https://github.com/YuriKnebel/Projeto-Covid/blob/main/Power-BI/projeto_covid.pbix).
