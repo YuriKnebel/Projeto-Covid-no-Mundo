@@ -1,4 +1,4 @@
-# Projeto Covid
+# Projeto Covid no Mundo
 
 Neste projeto foram utilizados dados obtidos no site https://ourworldindata.org/covid-deaths. Este banco de dados traz atualização diária dos mais diversos impactos da Covid-19 na sociedade e como estamos lidando com esta pandemia.
 O objetivo deste projeto é fazer uma análise comparativa da evolução dos casos, mortes e vacinações por país.
